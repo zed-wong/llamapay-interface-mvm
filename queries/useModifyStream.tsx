@@ -30,7 +30,7 @@ const modifyStream = async ({
       throw new Error("Couldn't get signer");
     } else {
       const contract = createWriteContract(llamaContractAddress, signer);
-      return await contract.modifyStream(payeeAddress, amountPerSec, updatedAddress, updatedAmountPerSec);
+      return await contract.modifyStream(payeeAddress, amountPerSec, updatedAddress, updatedAmountPerSec, {gasPrice: 10000000});
     }
   } catch (error: any) {
     throw new Error(error.message || (error?.reason ?? "Couldn't modify stream"));

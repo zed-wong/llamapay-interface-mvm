@@ -22,9 +22,9 @@ const withdrawPayer = async ({ signer, llamaContractAddress, amountToWithdraw, w
     } else {
       const contract = createWriteContract(llamaContractAddress, signer);
       if (withdrawAll) {
-        return await contract.withdrawPayerAll();
+        return await contract.withdrawPayerAll({gasPrice: 10000000});
       } else {
-        return await contract.withdrawPayer(amountToWithdraw);
+        return await contract.withdrawPayer(amountToWithdraw, {gasPrice: 10000000});
       }
     }
   } catch (error: any) {

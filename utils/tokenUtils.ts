@@ -39,7 +39,7 @@ export const checkHasApprovedEnough = async ({
     const res = (await token.allowance(userAddress, approveForAddress)).gte(approvedForAmount);
     return { res, err: null };
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     return { res: false, err: 'Something went wrong' };
   }
 };

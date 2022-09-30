@@ -31,7 +31,7 @@ const create = async ({ factoryAddress, signer, tokenAddress }: IDepositToken) =
     }
 
     const contract = createFactoryWriteContract(factoryAddress, signer);
-    return await contract.createLlamaPayContract(getAddress(tokenAddress));
+    return await contract.createLlamaPayContract(getAddress(tokenAddress), {gasPrice: 10000000});
   } catch (error: any) {
     throw new Error(error.message || (error?.reason ?? "Couldn't create contract"));
   }

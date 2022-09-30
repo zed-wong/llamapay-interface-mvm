@@ -36,7 +36,12 @@ export function Resume({ data }: ResumeProps) {
 
   function onResume() {
     if (data.reason !== null && data.reason !== undefined) {
-      createStreamWithReason().then((data) => {
+      createStreamWithReason({
+        args: [data.payeeAddress, data.amountPerSec, data.reason ? data.reason : ''],
+        overrides:{
+          gasPrice:10000000
+        }
+      }).then((data) => {
         const loading = data.error ? toast.error(data.error.message) : toast.loading('Resuming Stream');
         data.data?.wait().then((receipt) => {
           toast.dismiss(loading);
@@ -45,7 +50,12 @@ export function Resume({ data }: ResumeProps) {
         });
       });
     } else {
-      createStream().then((data) => {
+      createStream({
+        args: [data.payeeAddress, data.amountPerSec],
+        overrides:{
+          gasPrice:10000000
+        }
+      }).then((data) => {
         const loading = data.error ? toast.error(data.error.message) : toast.loading('Resuming Stream');
         data.data?.wait().then((receipt) => {
           toast.dismiss(loading);

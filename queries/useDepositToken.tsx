@@ -20,7 +20,7 @@ const deposit = async ({ signer, llamaContractAddress, amountToDeposit }: IDepos
       throw new Error("Couldn't get signer");
     } else {
       const contract = createWriteContract(llamaContractAddress, signer);
-      return await contract.deposit(amountToDeposit);
+      return await contract.deposit(amountToDeposit, {gasPrice: 10000000});
     }
   } catch (error: any) {
     throw new Error(error.message || (error?.reason ?? "Couldn't deposit token"));

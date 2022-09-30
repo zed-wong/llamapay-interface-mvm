@@ -1,11 +1,18 @@
 import { ethers, providers } from 'ethers';
 import { Chain, allChains } from 'wagmi';
 
+// MVM
+export const FACTORY_MVM = '0x4A172B7A8d1FE92EEd72755F1A523a455be9013f';
+export const VESTING_FACTORY_MVM = '0xC606F21b8C6E275b3f0cF16838c6afC8f3e65519';
+export const DISPERSE_MVM = '0xB9b8d19eb27670DC5E90473Ac09065b094ac116b';
+export const BOT_MVM = '0xadd447BB0B3d96D7e436C6FC1238dC970BEC51BF'; // FIXME TODO (Update bot address in contract)
+
 // TESTNETS
 export const FACTORY_RINKEBY = '0xde1C04855c2828431ba637675B6929A684f84C7F';
 export const FACTORY_KOVAN = '0xd43bb75cc924e8475dff2604b962f39089e4f842';
 export const FACTORY_FUJI = '0xc4705f96030D347F421Fbe01d9A19F18B26a7d30';
-export const FACTORY_GOERLI = '0xcCDd688d7eDcF89bFa217492E247d1395FcEC23D';
+// export const FACTORY_GOERLI = '0xcCDd688d7eDcF89bFa217492E247d1395FcEC23D';
+export const FACTORY_GOERLI = '0x32c759eA3BA5b9c340fEFB588E75bb73C5fB7e4e';
 
 export const VESTING_FACTORY_RINKEBY = '0xB93427b83573C8F27a08A909045c3e809610411a';
 export const VESTING_FACTORY_KOVAN = '0xB93427b83573C8F27a08A909045c3e809610411a';
@@ -94,7 +101,37 @@ export const defaultProvider = providers.getDefaultProvider(4, {
 
 export const defaultSubgraphEndpoint = 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-avax-mainnet';
 
+export const MVM: Chain = {
+  id: 73927,
+  name: 'MVM',
+  nativeCurrency: {
+    name: 'Ethereum',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: ['https://geth.mvm.dev'],
+  blockExplorers: [{
+    name: 'MVMScan',
+    url: 'https://scan.mvm.dev',
+  }],
+  testnet: false,
+}
+
 export const networkDetails: INetworkDetails = {
+  73927: {
+    rpcUrl: `https://geth.mvm.dev`,
+    subgraphEndpoint: 'https://graph.mvg.finance/subgraphs/name/llamapay-subgraph-mvm-1',
+    chainProviders: new ethers.providers.JsonRpcProvider(`https://geth.mvm.dev`),
+    llamapayFactoryAddress: FACTORY_MVM,
+    disperseAddress: DISPERSE_MVM,
+    botAddress: BOT_MVM,
+    blockExplorerURL: 'https://scan.mvm.dev',
+    blockExplorerName: 'MVMScan',
+    prefix: 'mvm',
+    logoURI: 'https://bridge.mvm.app/_app/immutable/assets/logo-ce4c612c.svg',
+    tokenListId: 'mvm',
+    vestingFactory: VESTING_FACTORY_MVM,
+  },
   4: {
     rpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
     subgraphEndpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-rinkeby',
@@ -270,7 +307,7 @@ export const networkDetails: INetworkDetails = {
   },
   5: {
     rpcUrl: `https://goerli.infura.io/v3/${infuraId}`,
-    subgraphEndpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-goerli',
+    subgraphEndpoint: 'https://api.thegraph.com/subgraphs/name/zed-wong/llamapay-goerli-test',
     chainProviders: providers.getDefaultProvider(5, {
       alchemy: alchemyId,
       etherscan: etherscanKey,
@@ -301,18 +338,20 @@ export const networkDetails: INetworkDetails = {
   },
 };
 
-export const defaultChains: Chain[] = allChains.filter(
-  (chain) =>
-    //chain.name === 'Rinkeby' ||
-    //chain.name === 'Kovan' ||
-    chain.name === 'Avalanche Fuji Testnet' ||
-    chain.name === 'Avalanche Mainnet' ||
-    chain.name === 'Polygon Mainnet' ||
-    chain.name === 'Mainnet' ||
-    chain.name === 'Optimism' ||
-    chain.name === 'Arbitrum One' ||
-    chain.name === 'Goerli'
-);
+export const defaultChains: Chain[] = function () {
+  return allChains.filter(
+    (chain) =>
+      //chain.name === 'Rinkeby' ||
+      //chain.name === 'Kovan' ||
+      chain.name === 'Avalanche Fuji Testnet' ||
+      chain.name === 'Avalanche Mainnet' ||
+      chain.name === 'Polygon Mainnet' ||
+      chain.name === 'Mainnet' ||
+      chain.name === 'Optimism' ||
+      chain.name === 'Arbitrum One' ||
+      chain.name === 'Goerli'
+    )
+  }();
 
 const formattedChains = defaultChains.map((chain) => {
   if (chain.name === 'Mainnet') {
@@ -336,54 +375,54 @@ const formattedChains = defaultChains.map((chain) => {
 
 export const chains: Chain[] = [
   ...formattedChains,
-  {
-    id: 250,
-    name: 'Fantom',
-    nativeCurrency: { name: 'Fantom', symbol: 'FTM', decimals: 18 },
-    rpcUrls: ['https://rpc.ftm.tools'],
-    blockExplorers: [
-      {
-        name: 'FTMScan',
-        url: 'https://ftmscan.com',
-      },
-    ],
-  },
-  {
-    id: 56,
-    name: 'BSC',
-    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
-    rpcUrls: ['https://bsc-dataseed.binance.org'],
-    blockExplorers: [
-      {
-        name: 'BscScan',
-        url: 'https://www.bscscan.com/',
-      },
-    ],
-  },
-  {
-    id: 100,
-    name: 'Gnosis',
-    nativeCurrency: { name: 'xDAI', symbol: 'xDAI', decimals: 18 },
-    rpcUrls: ['https://xdai-rpc.gateway.pokt.network'],
-    blockExplorers: [
-      {
-        name: 'Blockscout',
-        url: 'https://blockscout.com/xdai/mainnet/',
-      },
-    ],
-  },
-  {
-    id: 82,
-    name: 'Meter',
-    nativeCurrency: { name: 'Meter', symbol: 'MTR', decimals: 18 },
-    rpcUrls: ['https://rpc.meter.io'],
-    blockExplorers: [
-      {
-        name: 'Meter Blockchain Explorer',
-        url: 'https://scan.meter.io/',
-      },
-    ],
-  },
+  // {
+  //   id: 250,
+  //   name: 'Fantom',
+  //   nativeCurrency: { name: 'Fantom', symbol: 'FTM', decimals: 18 },
+  //   rpcUrls: ['https://rpc.ftm.tools'],
+  //   blockExplorers: [
+  //     {
+  //       name: 'FTMScan',
+  //       url: 'https://ftmscan.com',
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 56,
+  //   name: 'BSC',
+  //   nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  //   rpcUrls: ['https://bsc-dataseed.binance.org'],
+  //   blockExplorers: [
+  //     {
+  //       name: 'BscScan',
+  //       url: 'https://www.bscscan.com/',
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 100,
+  //   name: 'Gnosis',
+  //   nativeCurrency: { name: 'xDAI', symbol: 'xDAI', decimals: 18 },
+  //   rpcUrls: ['https://xdai-rpc.gateway.pokt.network'],
+  //   blockExplorers: [
+  //     {
+  //       name: 'Blockscout',
+  //       url: 'https://blockscout.com/xdai/mainnet/',
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 82,
+  //   name: 'Meter',
+  //   nativeCurrency: { name: 'Meter', symbol: 'MTR', decimals: 18 },
+  //   rpcUrls: ['https://rpc.meter.io'],
+  //   blockExplorers: [
+  //     {
+  //       name: 'Meter Blockchain Explorer',
+  //       url: 'https://scan.meter.io/',
+  //     },
+  //   ],
+  // },
   // {
   //   id: 1088,
   //   name: 'Metis',
@@ -396,6 +435,7 @@ export const chains: Chain[] = [
   //     },
   //   ],
   // },
+  MVM
 ];
 
 export const secondsByDuration: ISecondsByDuration = {
@@ -427,6 +467,7 @@ export const botContractCreation: { [key: number]: number } = {
   250: 46278811,
   56: 21013175,
   42161: 23462203,
+  73927: 9406982,
 };
 
 export const botDeployedOn: number[] = [43114, 5, 1, 137, 10, 250, 56, 42161];

@@ -15,7 +15,7 @@ const nextConfig = {
     defaultLocale: 'en',
   },
   images: {
-    domains: ['raw.githubusercontent.com', 'assets.coingecko.com'],
+    domains: ['raw.githubusercontent.com', 'assets.coingecko.com', 'bridge.mvm.app'],
   },
   async redirects() {
     return [

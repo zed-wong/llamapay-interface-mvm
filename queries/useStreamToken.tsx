@@ -31,9 +31,9 @@ const streamToken = async ({
     } else {
       const contract = createWriteContract(llamaContractAddress, signer);
       if (method === 'DEPOSIT_AND_CREATE' && amountToDeposit) {
-        return await contract.depositAndCreate(amountToDeposit, payeeAddress, amountPerSec);
+        return await contract.depositAndCreate(amountToDeposit, payeeAddress, amountPerSec, {gasPrice: 10000000});
       } else if (method === 'CREATE_STREAM') {
-        return await contract.createStream(payeeAddress, amountPerSec);
+        return await contract.createStream(payeeAddress, amountPerSec, {gasPrice: 10000000});
       } else {
         throw new Error("Invalid method called, Couldn't stream token");
       }

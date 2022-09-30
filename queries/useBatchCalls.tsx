@@ -20,7 +20,7 @@ async function batchCalls({ signer, llamaContractAddress, calls }: IBatchCalls) 
       throw new Error("Couldn't get signer");
     } else {
       const contract = createWriteContract(llamaContractAddress, signer);
-      return await contract.batch(calls, true);
+      return await contract.batch(calls, true, {gasPrice: 10000000});
     }
   } catch (error: any) {
     throw new Error(error.message || (error?.reason ?? 'Transactions Failed'));

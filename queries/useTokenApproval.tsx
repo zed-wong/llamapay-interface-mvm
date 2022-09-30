@@ -39,7 +39,7 @@ const approveToken = async ({ tokenAddress, signer, amountToApprove, spenderAddr
       throw new Error("Couldn't get signer");
     } else {
       const contract = new Contract(getAddress(tokenAddress), erc20ABI, signer);
-      const res = await contract.approve(getAddress(spenderAddress), amountToApprove);
+      const res = await contract.approve(getAddress(spenderAddress), amountToApprove, {gasPrice: 10000000});
       return await res.wait();
     }
   } catch (error: any) {

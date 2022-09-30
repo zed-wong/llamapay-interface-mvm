@@ -9,6 +9,7 @@ import { useContractWrite } from 'wagmi';
 import { useTranslations } from 'next-intl';
 import { LlamaContractInterface } from 'utils/contract';
 import useGnosisBatch from 'queries/useGnosisBatch';
+import { ethers } from 'ethers';
 
 interface PushProps {
   buttonName: 'Send' | 'Withdraw';
@@ -26,7 +27,7 @@ export const Push = ({ data, buttonName }: PushProps) => {
     'withdraw',
     {
       args: [data.payerAddress, data.payeeAddress, data.amountPerSec],
-    }
+    },
   );
   const { mutate: gnosisBatch } = useGnosisBatch();
   const queryClient = useQueryClient();
@@ -41,11 +42,16 @@ export const Push = ({ data, buttonName }: PushProps) => {
           data.payerAddress,
           data.payeeAddress,
           data.amountPerSec,
-        ]),
+        ],),
       ];
       gnosisBatch({ calls: call });
     } else {
-      withdraw().then(({ data, error }: ITransaction) => {
+      withdraw({
+        args: [data.payerAddress,data.payeeAddress,data.amountPerSec,],
+        overrides:{
+          gasPrice:10000000
+        }
+      }).then(({ data, error }: ITransaction) => {
         if (data) {
           setTransactionHash(data.hash ?? null);
 

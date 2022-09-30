@@ -33,7 +33,12 @@ export function Pause({ data }: PauseProps) {
       ];
       gnosisBatch({ calls: call });
     } else {
-      pauseStream().then((data) => {
+      pauseStream({
+        args: [data.payeeAddress, data.amountPerSec],
+        overrides:{
+          gasPrice:10000000
+        }
+      }).then((data) => {
         const loading = data.error ? toast.error(data.error.message) : toast.loading('Pausing Stream');
         data.data?.wait().then((receipt) => {
           toast.dismiss(loading);

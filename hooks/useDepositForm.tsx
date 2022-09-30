@@ -122,6 +122,7 @@ export function useDepositForm({
           formDialog: componentDialog,
         });
       } else if (isApproved && tokenDetails.llamaContractAddress) {
+        console.log(`Deposit ${bigAmount.toFixed(0)} to ${tokenDetails.llamaContractAddress}`)
         deposit(
           {
             amountToDeposit: bigAmount.toFixed(0),
