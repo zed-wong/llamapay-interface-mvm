@@ -27,6 +27,6 @@ export function useGetTokenList() {
   const { tokenListId } = useNetworkProvider();
 
   return useQuery<ITokenList>(['tokenlist', tokenListId], () => fetchTokenList(tokenListId), {
-    refetchInterval: 10000,
+    refetchInterval: 30000,
   });
 }
