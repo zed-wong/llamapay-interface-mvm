@@ -86,7 +86,7 @@ export function StreamTable({ data }: { data: IStream[] }) {
               <Tooltip
                 content="Copy link to stream"
                 onClick={() =>
-                  navigator.clipboard.writeText(`https://llamapay.io/salaries/withdraw/${network}/${info.getValue()}`)
+                  navigator.clipboard.writeText(`https://llamapay.mvg.finance/salaries/withdraw/${network}/${info.getValue()}`)
                 }
                 className={classNames(
                   'relative top-[1px] ml-auto flex items-center',
