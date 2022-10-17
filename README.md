@@ -3,7 +3,8 @@
 
 This is the llamapay modified for MVM mainnet.
 
-Visit https://llamapay.mvg.finance to use it.
+Visit https://llamapay.mvg.finance to use it. (Status: DONE, due to graph node is down, will be ready again when the graph node is up)
+
 
 ### Contract address
 
